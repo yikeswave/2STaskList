@@ -1,15 +1,83 @@
-import React, { Fragment } from "react";
-import { Button } from "@vkontakte/vkui";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Button, Card, FormLayout, Input } from "@vkontakte/vkui";
 import Icon24Add from "@vkontakte/icons/dist/24/add";
+import firebase from "firebase/app";
 
-const DeskCreate = () => {
-  return (
-    <Fragment>
-      <Button before={<Icon24Add />} size="xl">
+const modes = {
+  button: "button",
+  form: "form",
+};
+
+const statuses = {
+  default: "default",
+  erorr: "error",
+};
+
+const DeskCreate = ({ onCreate }) => {
+  const [mode, setMode] = useState(modes.button);
+  const [name, setName] = useState("");
+  const [status, setStatus] = useState(statuses.default);
+
+  const reset = () => {
+    setStatus(statuses.default);
+    setMode(modes.button);
+    setName("");
+  };
+
+  const createDesk = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    if (!name.trim().length) {
+      setStatus(statuses.erorr);
+      return;
+    }
+
+    const db = firebase.firestore();
+
+    db.collection("desks")
+      .add({ name })
+      .then((docRef) => docRef.get())
+      .then((doc) => onCreate({ id: doc.id, ...doc.data() }))
+      .then(reset)
+      .catch(console.error);
+  };
+
+  if (mode === modes.button) {
+    return (
+      <Button
+        onClick={() => setMode(modes.form)}
+        before={<Icon24Add />}
+        size="xl"
+      >
         Создать доску
       </Button>
-    </Fragment>
+    );
+  }
+  return (
+    <Card size="l" mode="shadow">
+      <FormLayout onSubmit={() => createDesk}>
+        <Input
+          autoFocus
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          status={status}
+          placeholder="Введите название доски"
+        />
+        <div>
+          <Button onClick={createDesk}>Создать доску</Button>
+          <Button onClick={reset} mode="tertiary">
+            Отменить
+          </Button>
+        </div>
+      </FormLayout>
+    </Card>
   );
+};
+
+DeskCreate.propTypes = {
+  onCreate: PropTypes.func.isRequired,
 };
 
 export default DeskCreate;
