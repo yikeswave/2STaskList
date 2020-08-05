@@ -5,9 +5,13 @@ import firebase from "firebase/app";
 import "./Columns.css";
 
 import Column from "./Column";
+import ColumnCreate from "./ColumnCreate";
 
 const Columns = () => {
   const [columns, setColumns] = useState([]);
+  const addColumn = (column) => setColumns([...columns, column]);
+  const removeColumn = (removeId) =>
+    setColumns(columns.filter(({ id }) => id !== removeId));
 
   // Запрос к БД
   useEffect(() => {
@@ -34,11 +38,12 @@ const Columns = () => {
     <Fragment>
       <PanelHeaderSimple>Доска</PanelHeaderSimple>
 
-      {columns.length ? (
-        <Gallery className="Columns__list" slideWidth="100%" align="center">
-          {columns.map(({id}) => <Column key={id} />)}
-        </Gallery>
-      ) : null}
+      <Gallery className="Columns__list" slideWidth="100%" align="center">
+        {columns.map(({ id, name }) => (
+          <Column key={id} name={name} id={id} onDelete={removeColumn} />
+        ))}
+        <ColumnCreate onCreate={addColumn} />
+      </Gallery>
     </Fragment>
   );
 };

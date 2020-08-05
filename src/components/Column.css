@@ -8,3 +8,9 @@
   padding: 16px 0;
   box-sizing: border-box;
 }
+
+.Column__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}

@@ -1,28 +1,43 @@
 import React from "react";
-import { Div, Card, CardGrid } from "@vkontakte/vkui";
+import PropTypes from "prop-types";
+import { Div, Card, CardGrid, Header, Button } from "@vkontakte/vkui";
+import firebase from "firebase/app";
 
 import "./Column.css";
+import ColumnCard from "./ColumnCard";
 
-const Column = () => {
+const Column = ({ name, id, onDelete }) => {
+  const deleteColumn = () => {
+    const db = firebase.firestore();
+
+    db.collection("columns")
+      .doc(id)
+      .delete()
+      .then(() => onDelete(id))
+      .catch(console.error);
+  };
+
   return (
     <Div className="Column">
+      <div className="Column__header">
+        <Header>{name}</Header>
+        <Button mode="destructive" onClick={deleteColumn}>
+          Удалить
+        </Button>
+      </div>
       <Card className="Column__wrapper">
         <CardGrid>
-          <Card size="l">
-            <Div>Карточка 1</Div>
-          </Card>
-
-          <Card size="l">
-            <Div>Карточка 2</Div>
-          </Card>
-
-          <Card size="l">
-            <Div>Карточка 3</Div>
-          </Card>
+          <ColumnCard>Карточка</ColumnCard>
         </CardGrid>
       </Card>
     </Div>
   );
+};
+
+Column.propTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Column;
