@@ -4,7 +4,7 @@ import { Div, Card, CardGrid, Header, Button } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 
 import "./Column.css";
-import ColumnCard from "./ColumnCard";
+import Cards from '../Cards/Cards';
 
 const Column = ({ name, id, onDelete }) => {
   const deleteColumn = () => {
@@ -26,9 +26,7 @@ const Column = ({ name, id, onDelete }) => {
         </Button>
       </div>
       <Card className="Column__wrapper">
-        <CardGrid>
-          <ColumnCard>Карточка</ColumnCard>
-        </CardGrid>
+        <Cards columnId={id} />
       </Card>
     </Div>
   );

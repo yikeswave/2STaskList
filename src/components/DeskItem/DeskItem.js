@@ -6,7 +6,7 @@ import firebase from "firebase/app";
 
 import "./DeskItem.css";
 
-const DeskItem = ({ id, children, onDelete }) => {
+const DeskItem = ({ id, children, onDelete, onClick }) => {
   const deleteItem = () => {
     const db = firebase.firestore();
 
@@ -17,7 +17,7 @@ const DeskItem = ({ id, children, onDelete }) => {
       .catch(console.error);
   };
   return (
-    <Card size="l">
+    <Card size="l" onClick={onClick}>
       <Div className="DeskItem__content">
         {children}
         <Button mode="destructive" onClick={deleteItem}>
@@ -35,6 +35,7 @@ DeskItem.propType = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default DeskItem;
