@@ -3,27 +3,11 @@ import "core-js/features/set";
 import React from "react";
 import ReactDOM from "react-dom";
 // import bridge from "@vkontakte/vk-bridge";
+import * as backend from "./actions/index";
+
 import App from "./components/App/App";
 
-import * as firebase from "firebase/app";
-import "firebase/analytics";
-import "firebase/auth";
-import "firebase/firestore";
-
-var firebaseConfig = {
-  apiKey: "AIzaSyBrcjyS774cKX3kzmqkZ98ptDyr72WNmfE",
-  authDomain: "stasklist-bb623.firebaseapp.com",
-  databaseURL: "https://stasklist-bb623.firebaseio.com",
-  projectId: "stasklist-bb623",
-  storageBucket: "stasklist-bb623.appspot.com",
-  messagingSenderId: "501606567637",
-  appId: "1:501606567637:web:8e1428fe4dd398204e1c5c",
-  measurementId: "G-TH8VCCTTHQ",
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+backend.initialize();
 
 // Init VK  Mini App
 // bridge.send("VKWebAppInit");

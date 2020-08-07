@@ -1,23 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import firebase from "firebase/app";
 
 import CreateForm from "../CreateForm/CreateForm";
+import { createDesk } from "../../actions/index";
 
 const DeskCreate = ({ onCreate }) => {
-  const createDesk = (name) => {
-    const db = firebase.firestore();
-
-    return db.collection("desks")
-      .add({ name })
-      .then((docRef) => docRef.get())
+  const createItem = (name) =>
+    createDesk(name)
       .then((doc) => onCreate({ id: doc.id, ...doc.data() }))
       .catch(console.error);
-  };
 
   return (
     <CreateForm
-      onSubmit={createDesk}
+      onSubmit={createItem}
       placeholder="Введите название доски"
       actionTitle="Создать доску"
     />

@@ -1,17 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Div, Card, Button } from "@vkontakte/vkui";
-import firebase from 'firebase/app';
 
 import "./ColumnCard.css";
+import {deleteCard} from '../../actions/index';
 
 const ColumnCard = ({ children, id, onDelete }) => {
-  const deleteCard = () => {
-    const db = firebase.firestore();
-
-    db.collection("cards")
-      .doc(id)
-      .delete()
+  const deleteItem = () => {
+    deleteCard(id)
       .then(() => onDelete(id))
       .catch(console.error);
   };
@@ -20,7 +16,7 @@ const ColumnCard = ({ children, id, onDelete }) => {
     <Card size="l">
       <Div className="ColumnCard__wrapper">
         {children}
-        <Button mode="destructive" onClick={deleteCard}>
+        <Button mode="destructive" onClick={deleteItem}>
           Удалить
         </Button>
       </Div>

@@ -2,20 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, Div, Button } from "@vkontakte/vkui";
 
-import firebase from "firebase/app";
-
 import "./DeskItem.css";
+import { deleteDesk } from "../../actions/index";
 
 const DeskItem = ({ id, children, onDelete, onClick }) => {
   const deleteItem = () => {
-    const db = firebase.firestore();
-
-    db.collection("desks")
-      .doc(id)
-      .delete()
+    deleteDesk(id)
       .then(() => onDelete(id))
       .catch(console.error);
   };
+
   return (
     <Card size="l" onClick={onClick}>
       <Div className="DeskItem__content">

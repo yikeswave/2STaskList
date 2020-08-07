@@ -1,28 +1,14 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { CardGrid } from "@vkontakte/vkui";
-import firebase from "firebase/app";
 
 import DeskItem from "../DeskItem/DeskItem";
+import { getDesks } from "../../actions/index";
 
 const DeskList = ({ desks, onDelete, onLoadDesks, onDeskClick }) => {
   // Запрос к БД
   useEffect(() => {
-    const db = firebase.firestore();
-
-    db.collection("desks")
-      .get()
-      .then((querySnapshot) => {
-        const desks = [];
-        querySnapshot.forEach((doc) => {
-          desks.push({
-            id: doc.id,
-            name: doc.data().name,
-          });
-        });
-
-        onLoadDesks(desks);
-      });
+    getDesks().then(onLoadDesks);
   }, []);
 
   if (!desks.length) {

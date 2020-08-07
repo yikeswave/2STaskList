@@ -1,12 +1,12 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { PanelHeaderSimple, PanelHeaderBack, Gallery } from "@vkontakte/vkui";
-import firebase from "firebase/app";
 
 import "./Columns.css";
 
 import Column from "../../components/Column/Column";
 import ColumnCreate from "../../components/ColumnCreate/ColumnCreate";
+import { getColumns } from "../../actions/index";
 
 const Columns = ({
   goBack,
@@ -18,24 +18,7 @@ const Columns = ({
 }) => {
   // Запрос к БД
   useEffect(() => {
-    const db = firebase.firestore();
-
-    db.collection("columns")
-      .where("deskId", "==", desk.id)
-      .get()
-      .then((querySnapshot) => {
-        const columns = [];
-        querySnapshot.forEach((doc) => {
-          const { deskId, name } = doc.data();
-          columns.push({
-            id: doc.id,
-            deskId,
-            name,
-          });
-        });
-
-        setColumns(columns);
-      });
+    getColumns(desk.id).then(setColumns);
   }, []);
 
   return (

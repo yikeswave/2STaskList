@@ -1,20 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Div } from "@vkontakte/vkui";
-import firebase from "firebase/app";
 
 import "../Column/Column.css";
 
 import CreateForm from "../CreateForm/CreateForm";
+import { createColumn } from "../../actions/index";
 
 const ColumnCreate = ({ onCreate, deskId }) => {
-  const createColumn = (name) => {
-    const db = firebase.firestore();
-
-    return db
-      .collection("columns")
-      .add({ name, deskId })
-      .then((docRef) => docRef.get())
+  const createItem = (name) => {
+    return createColumn(name, deskId)
       .then((doc) => onCreate({ id: doc.id, ...doc.data() }))
       .catch(console.error);
   };
@@ -22,7 +17,7 @@ const ColumnCreate = ({ onCreate, deskId }) => {
   return (
     <Div className="Column">
       <CreateForm
-        onSubmit={createColumn}
+        onSubmit={createItem}
         placeholder="Введите название колонки"
         actionTitle="Создать колонку"
       />
