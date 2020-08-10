@@ -10,7 +10,7 @@ const modes = {
 
 const statuses = {
   default: "default",
-  erorr: "error",
+  error: "error",
 };
 
 const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
@@ -30,7 +30,7 @@ const CreateForm = ({ onSubmit, placeholder, actionTitle }) => {
     }
 
     if (!name.trim().length) {
-      setStatus(statuses.erorr);
+      setStatus(statuses.error);
       return;
     }
 
