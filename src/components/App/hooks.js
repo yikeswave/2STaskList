@@ -1,6 +1,5 @@
-import { useState } from "react";
-
-import { panel } from "./constants";
+import { useState, useEffect } from "react";
+import { getDesks } from "../../actions/index";
 
 const useColumnsState = () => {
   const [columns, setColumns] = useState([]);
@@ -17,19 +16,19 @@ const useDesksState = () => {
   const removeDesk = (removeId) =>
     setDesks(desks.filter(({ id }) => id !== removeId));
 
+  // Запрос к БД
+  useEffect(() => {
+    getDesks().then(setDesks);
+  }, []);
+
   return { desks, addDesk, removeDesk, setDesks };
 };
 
-const useNavState = (desks) => {
-  const [activePanel, setActivePanel] = useState(panel.desks);
-  const [activeDesk, setActiveDesk] = useState(null);
-  const goToColumns = (deskId) => {
-    setActiveDesk(desks.find(({ id }) => id === deskId));
-    setActivePanel(panel.columns);
-  };
-  const goToDesks = () => setActivePanel(panel.desks);
+const useNavState = () => {
+  const [activePanel, setActivePanel] = useState(null);
+  const changeRoute = ({ route }) => setActivePanel(route.name);
 
-  return { activePanel, activeDesk, goToColumns, goToDesks };
+  return { activePanel, changeRoute };
 };
 
 const useCardsState = () => {
@@ -50,7 +49,7 @@ const usePopoutState = () => {
 export const useAppState = () => {
   const desksState = useDesksState();
   const columnsState = useColumnsState();
-  const navState = useNavState(desksState.desks);
+  const navState = useNavState();
   const cardsState = useCardsState();
   const popoutState = usePopoutState();
 
@@ -59,6 +58,6 @@ export const useAppState = () => {
     ...columnsState,
     ...navState,
     ...cardsState,
-    ...popoutState
+    ...popoutState,
   };
 };

@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useContext } from "react";
 import { PanelHeaderSimple, PanelHeaderBack, Gallery } from "@vkontakte/vkui";
+import { useRoute } from "react-router5";
 
 import "./Columns.css";
 
@@ -9,16 +10,25 @@ import { getColumns } from "../../actions/index";
 import Context from "../../components/App/context";
 
 const Columns = () => {
-  const { goToDesks, setColumns, columns, activeDesk } = useContext(Context);
+  const { goToDesks, setColumns, columns, desks } = useContext(Context);
+  const {
+    route: {
+      params: { deskId },
+    },
+  } = useRoute();
+  const desk = desks.find(({id}) => id === deskId) || {};
+
   // Запрос к БД
   useEffect(() => {
-    getColumns(activeDesk.id).then(setColumns);
-  }, []);
+    if (desk.id) {
+      getColumns(desk.id).then(setColumns);
+    }
+  }, [desk]);
 
   return (
     <Fragment>
       <PanelHeaderSimple left={<PanelHeaderBack onClick={goToDesks} />}>
-        Доска "{activeDesk.name}"
+        Доска {desk.name ? `"${desk.name}"` : ''} 
       </PanelHeaderSimple>
 
       <Gallery className="Columns__list" slideWidth="85%" align="left">

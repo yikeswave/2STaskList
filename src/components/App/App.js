@@ -1,31 +1,37 @@
-import React from "react";
+import React, { Fragment, useEffect } from "react";
 import { View, Panel } from "@vkontakte/vkui";
-import "@vkontakte/vkui/dist/vkui.css";
+import { useRoute } from "react-router5";
 
 import Desks from "../../panels/Desks/Desks";
 import Columns from "../../panels/Columns/Columns";
-import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
-import { panel } from "./constants";
-import Context from "./context";
+import { pages } from "../../router";
 import { useAppState } from "./hooks";
 
 const App = () => {
-  const state = useAppState();
+  const { activePanel, popout, changeRoute } = useAppState();
+  const { router, route } = useRoute();
+
+  useEffect(() => {
+    router.subscribe(changeRoute);
+
+    changeRoute({ route });
+  }, []);
+
+  if (!activePanel) {
+    return null;
+  }
 
   return (
-    <ErrorBoundary>
-      <Context.Provider value={state}>
-        <View activePanel={state.activePanel} popout={state.popout}>
-          <Panel id={panel.desks}>
-            <Desks />
-          </Panel>
-
-          <Panel id={panel.columns} className="Columns">
-            {state.activeDesk && <Columns />}
-          </Panel>
-        </View>
-      </Context.Provider>
-    </ErrorBoundary>
+    <Fragment>
+      <View activePanel={activePanel} popout={popout}>
+        <Panel id={pages.DESKS}>
+          <Desks />
+        </Panel>
+        <Panel id={pages.COLUMNS} className="Columns">
+          <Columns />
+        </Panel>
+      </View>
+    </Fragment>
   );
 };
 

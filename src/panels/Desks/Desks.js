@@ -5,6 +5,7 @@ import DeskList from "../../components/DeskList/DeskList";
 import DeskCreate from "../../components/DeskCreate/DeskCreate";
 
 const Desks = () => {
+
   return (
     <Fragment>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>

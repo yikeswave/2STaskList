@@ -1,16 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { CardGrid } from "@vkontakte/vkui";
 
 import DeskItem from "../DeskItem/DeskItem";
-import { getDesks } from "../../actions/index";
 import Context from "../App/context";
 
 const DeskList = () => {
-  const { desks, setDesks } = useContext(Context);
-  // Запрос к БД
-  useEffect(() => {
-    getDesks().then(setDesks);
-  }, []);
+  const { desks } = useContext(Context);
 
   if (!desks.length) {
     return null;
