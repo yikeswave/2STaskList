@@ -1,15 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Div } from "@vkontakte/vkui";
 import { useRoute } from "react-router5";
+import { useDispatch, useSelector } from "react-redux";
 
 import "../Column/Column.css";
 
 import ColumnCreateForm from "./ColumnCreateForm";
 import { createColumn } from "../../actions/index";
-import Context from "../App/context";
+import { addColumn } from "../../actions/actions";
 
 const ColumnCreate = () => {
-  const { addColumn, desks } = useContext(Context);
+  const dispatch = useDispatch();
+  const desks = useSelector((state) => state.desks);
   const {
     route: {
       params: { deskId },
@@ -19,7 +21,7 @@ const ColumnCreate = () => {
 
   const createItem = (name) =>
     createColumn(name, desk.id)
-      .then((doc) => addColumn({ id: doc.id, ...doc.data() }))
+      .then((doc) => dispatch(addColumn({ id: doc.id, ...doc.data() })))
       .catch(console.error);
 
   return (

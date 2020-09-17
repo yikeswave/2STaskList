@@ -1,11 +1,19 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import { CardGrid } from "@vkontakte/vkui";
+import { useDispatch, useSelector } from "react-redux";
 
 import DeskItem from "../DeskItem/DeskItem";
-import Context from "../App/context";
+import { getDesks } from "../../actions/index";
+import { setDesks } from "../../actions/actions";
 
 const DeskList = () => {
-  const { desks } = useContext(Context);
+  const dispatch = useDispatch();
+  const desks = useSelector((state) => state.desks);
+
+  // Запрос к БД
+  useEffect(() => {
+    getDesks().then((desks) => dispatch(setDesks(desks)));
+  }, []);
 
   if (!desks.length) {
     return null;

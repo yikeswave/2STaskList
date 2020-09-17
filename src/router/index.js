@@ -12,7 +12,7 @@ const routes = [
 ];
 
 export const initialize = () => {
-  const router = createRouter(routes, {defaultRoute: pages.DESKS});
+  const router = createRouter(routes, { defaultRoute: pages.DESKS }); 
 
   router.usePlugin(browserPlugin());
 

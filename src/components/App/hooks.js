@@ -16,11 +16,6 @@ const useDesksState = () => {
   const removeDesk = (removeId) =>
     setDesks(desks.filter(({ id }) => id !== removeId));
 
-  // Запрос к БД
-  useEffect(() => {
-    getDesks().then(setDesks);
-  }, []);
-
   return { desks, addDesk, removeDesk, setDesks };
 };
 
