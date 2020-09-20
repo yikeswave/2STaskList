@@ -4,16 +4,11 @@ import { Div, Card } from "@vkontakte/vkui";
 import { useDispatch } from "react-redux";
 
 import "./ColumnCard.css";
-import { deleteCard } from "../../actions/index";
-import { removeCard } from "../../actions/actions";
+import { deleteCard } from "../../actions/actions";
 
 const ColumnCard = ({ children, id }) => {
   const dispatch = useDispatch();
-  const deleteItem = () => {
-    deleteCard(id)
-      .then(() => dispatch(removeCard(id)))
-      .catch(console.error);
-  };
+  const deleteItem = () => dispatch(deleteCard(id));
 
   return (
     <Card size="l" mode="outline">

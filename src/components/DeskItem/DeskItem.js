@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
 
 import "./DeskItem.css";
 import { pages } from "../../router/index";
-import { deleteDesk } from "../../actions/index";
-import { removeDesk } from "../../actions/actions";
+import { deleteDesk } from "../../actions/actions";
 
 const DeskItem = ({ id, children }) => {
   const dispatch = useDispatch();
@@ -18,9 +17,7 @@ const DeskItem = ({ id, children }) => {
   const deleteItem = (e) => {
     e.stopPropagation();
 
-    deleteDesk(id)
-      .then(() => dispatch(removeDesk(id)))
-      .catch(console.error);
+    dispatch(deleteDesk(id));
   };
 
   return (

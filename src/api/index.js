@@ -20,7 +20,7 @@ export const initialize = () => {
   firebase.analytics();
 };
 
-export const createDesk = (name) => {
+export const apiCreateDesk = (name) => {
   const db = firebase.firestore();
 
   return db
@@ -29,7 +29,7 @@ export const createDesk = (name) => {
     .then((docRef) => docRef.get());
 };
 
-export const getDesks = () => {
+export const apiGetDesks = () => {
   const db = firebase.firestore();
 
   return db
@@ -48,13 +48,13 @@ export const getDesks = () => {
     });
 };
 
-export const deleteDesk = (id) => {
+export const apiDeleteDesk = (id) => {
   const db = firebase.firestore();
 
   return db.collection("desks").doc(id).delete();
 };
 
-export const getColumns = (deskId) => {
+export const apiGetColumns = (deskId) => {
   const db = firebase.firestore();
 
   return db
@@ -76,13 +76,13 @@ export const getColumns = (deskId) => {
     });
 };
 
-export const deleteColumn = (id) => {
+export const apiDeleteColumn = (id) => {
   const db = firebase.firestore();
 
   return db.collection("columns").doc(id).delete();
 };
 
-export const getCards = (columnId) => {
+export const apiGetCards = (columnId) => {
   const db = firebase.firestore();
 
   return db
@@ -104,13 +104,13 @@ export const getCards = (columnId) => {
     });
 };
 
-export const deleteCard = (id) => {
+export const apiDeleteCard = (id) => {
   const db = firebase.firestore();
 
   return db.collection("cards").doc(id).delete();
 };
 
-export const createCard = (name, columnId) => {
+export const apiCreateCard = (name, columnId) => {
   const db = firebase.firestore();
 
   return db
@@ -119,11 +119,11 @@ export const createCard = (name, columnId) => {
     .then((docRef) => docRef.get());
 };
 
-export const createColumn = (name, deskId) => {
+export const apiCreateColumn = (name, deskId) => {
   const db = firebase.firestore();
 
   return db
     .collection("columns")
     .add({ name, deskId })
-    .then((docRef) => docRef.get())
+    .then((docRef) => docRef.get());
 };

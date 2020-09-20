@@ -1,4 +1,5 @@
 import * as actionType from "./types";
+import * as api from "../api/index";
 
 export const addColumn = (column) => ({
   type: actionType.ADD_COLUMN,
@@ -49,3 +50,90 @@ export const setPopout = (popout) => ({
   type: actionType.SET_POPOUT,
   payload: { popout },
 });
+
+export const fetchDesks = () => (dispatch) =>
+  api
+    .apiGetDesks()
+    .then((desks) => {
+      dispatch({ type: "fetchDesksSuccess" });
+      dispatch(setDesks(desks));
+    })
+    .catch(() => dispatch({ type: "fetchDesksFail" }));
+
+export const deleteDesk = (id) => (dispatch) =>
+  api
+    .apiDeleteDesk(id)
+    .then(() => {
+      dispatch({ type: "deleteDeskSuccess" });
+      dispatch(removeDesk(id));
+    })
+    .catch(() => dispatch({ type: "deleteDeskFail" }));
+
+export const createDesk = (name) => (dispatch) =>
+  api
+    .apiCreateDesk(name)
+    .then((doc) => {
+      dispatch({ type: "createDeskSuccess" });
+      dispatch(addDesk({ id: doc.id, ...doc.data() }));
+    })
+    .catch(() => dispatch({ type: "createDeskFail" }));
+
+export const fetchColumns = (deskId) => (dispatch, getState) => {
+  const desks = getState().desks;
+  const desk = desks.find(({ id }) => id === deskId) || {};
+
+  if (desk.id) {
+    return api
+      .apiGetColumns(desk.id)
+      .then((columns) => {
+        dispatch({ type: "fetchColumnsSuccess" });
+        dispatch(setColumns(columns));
+      })
+      .catch(() => dispatch({ type: "fetchColumnsFail" }));
+  }
+};
+
+export const deleteColumn = (id) => (dispatch) =>
+  api
+    .apiDeleteColumn(id)
+    .then(() => {
+      dispatch({ type: "deleteColumnSuccess" });
+      dispatch(removeColumn(id));
+    })
+    .catch(() => dispatch({ type: "deleteColumnFail" }));
+
+export const fetchCards = (columnId) => (dispatch) =>
+  api
+    .apiGetCards(columnId)
+    .then((cards) => {
+      dispatch({ type: "fetchCardsSuccess" });
+      dispatch(setCards(cards));
+    })
+    .catch(() => dispatch({ type: "fetchCardsFail" }));
+
+export const deleteCard = (id) => (dispatch) =>
+  api
+    .apiDeleteCard(id)
+    .then(() => {
+      dispatch({ type: "deleteCardSuccess" });
+      dispatch(removeCard(id));
+    })
+    .catch(() => dispatch({ type: "deleteCardFail" }));
+
+export const createColumn = (name, id) => (dispatch) =>
+  api
+    .apiCreateColumn(name, id)
+    .then((doc) => {
+      dispatch({ type: "createColumnSuccess" });
+      dispatch(addColumn({ id: doc.id, ...doc.data() }));
+    })
+    .catch(() => dispatch({ type: "createColumnFail" }));
+
+export const createCard = (name, id) => (dispatch) =>
+  api
+    .apiCreateCard(name, id)
+    .then((doc) => {
+      dispatch({ type: "createCardSuccess" });
+      dispatch(addCard({ id: doc.id, ...doc.data() }));
+    })
+    .catch(() => dispatch({ type: "createCardFail" }));

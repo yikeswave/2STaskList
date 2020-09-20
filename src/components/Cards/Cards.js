@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ColumnCard from "../ColumnCard/ColumnCard";
 import CardCreate from "../CardCreate/CardCreate";
-import { getCards } from "../../actions/index";
-import { setCards } from "../../actions/actions";
+import { fetchCards } from "../../actions/actions";
 
 import "./Cards.css";
 
@@ -16,8 +15,8 @@ const Cards = ({ columnId }) => {
 
   // Запрос к БД
   useEffect(() => {
-    getCards(columnId).then((cards) => dispatch(setCards(cards)));
-  }, []);
+    dispatch(fetchCards(columnId));
+  }, [dispatch, columnId]);
 
   return (
     <Fragment>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getDesks } from "../../actions/index";
+import { apiGetDesks } from "../../api/index";
 
 const useColumnsState = () => {
   const [columns, setColumns] = useState([]);
