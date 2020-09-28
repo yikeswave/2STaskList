@@ -7,12 +7,13 @@ import "./Columns.css";
 
 import Column from "../../components/Column/Column";
 import ColumnCreate from "../../components/ColumnCreate/ColumnCreate";
-import { fetchColumns } from "../../actions/actions";
+import { fetchColumns } from "../../actions/index";
+import { getColumns, getDesks } from "../../selectors/selectors";
 
 const Columns = () => {
   const dispatch = useDispatch();
-  const columns = useSelector((state) => state.columns);
-  const desks = useSelector((state) => state.desks);
+  const columns = useSelector(getColumns);
+  const desks = useSelector(getDesks);
   const goToDesks = () => window.history.back();
   const {
     route: {

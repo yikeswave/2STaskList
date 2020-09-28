@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import "./DeskItem.css";
 import { pages } from "../../router/index";
-import { deleteDesk } from "../../actions/actions";
+import { deleteDesk } from "../../actions/index";
 
 const DeskItem = ({ id, children }) => {
   const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { Div, Card } from "@vkontakte/vkui";
 import { useDispatch } from "react-redux";
 
 import "./ColumnCard.css";
-import { deleteCard } from "../../actions/actions";
+import { deleteCard } from "../../actions/index";
 
 const ColumnCard = ({ children, id }) => {
   const dispatch = useDispatch();

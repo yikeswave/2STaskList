@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ColumnCard from "../ColumnCard/ColumnCard";
 import CardCreate from "../CardCreate/CardCreate";
-import { fetchCards } from "../../actions/actions";
+import { fetchCards } from "../../actions/index";
+import { getCards } from "../../selectors/selectors";
 
 import "./Cards.css";
 
 const Cards = ({ columnId }) => {
   const dispatch = useDispatch();
-  const cards = useSelector((state) => state.cards);
+  const cards = useSelector(getCards);
 
   // Запрос к БД
   useEffect(() => {

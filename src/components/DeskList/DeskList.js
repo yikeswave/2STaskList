@@ -3,11 +3,12 @@ import { CardGrid } from "@vkontakte/vkui";
 import { useDispatch, useSelector } from "react-redux";
 
 import DeskItem from "../DeskItem/DeskItem";
-import { fetchDesks } from "../../actions/actions";
+import { fetchDesks } from "../../actions/index";
+import { getDesks } from "../../selectors/selectors";
 
 const DeskList = () => {
   const dispatch = useDispatch();
-  const desks = useSelector((state) => state.desks);
+  const desks = useSelector(getDesks);
 
   // Запрос к БД
   useEffect(() => {

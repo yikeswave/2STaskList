@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import "../Column/Column.css";
 
 import ColumnCreateForm from "./ColumnCreateForm";
-import { createColumn } from "../../actions/actions";
+import { createColumn } from "../../actions/index";
+import { getDesks } from "../../selectors/selectors";
 
 const ColumnCreate = () => {
   const dispatch = useDispatch();
-  const desks = useSelector((state) => state.desks);
+  const desks = useSelector(getDesks);
   const {
     route: {
       params: { deskId },

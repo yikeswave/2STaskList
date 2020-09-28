@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 
 import "./Column.css";
 import Cards from "../Cards/Cards";
-import { deleteColumn, setPopout } from "../../actions/actions";
+import { deleteColumn, setPopout } from "../../actions/index";
 
 const Column = ({ name, id }) => {
   const dispatch = useDispatch();
