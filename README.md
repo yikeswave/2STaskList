@@ -1,5 +1,9 @@
 [<img width="134" src="https://vk.com/images/apps/mini_apps/vk_mini_apps_logo.svg">](https://vk.com/services)
 
+### Приложение 2STaskList
+
+Планируется аналог Trello или Todoist (со своими фичами и багами) в сервисе VK mini apps
+
 # Create VK Mini App [![npm][npm]][npm-url] [![deps][deps]][deps-url]
 
 ## How to install
@@ -32,7 +36,3 @@ Go to created folder and run:
 
 [deps]: https://img.shields.io/david/vkcom/create-vk-mini-app.svg
 [deps-url]: https://david-dm.org/vkcom/create-vk-mini-app
-
-### Приложение 2STaskList
-
-Планируется аналог Trello или Todoist (со своими фичами и багами) в сервисе VK mini apps
